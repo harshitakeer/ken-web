@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KEN — Look Good, Feel Good, Do Good</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- SVG Icon Definitions -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <!-- Spritz: spray bottle -->
+    <symbol id="icon-spritz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2v4"/>
+      <rect x="9" y="6" width="6" height="3" rx="1"/>
+      <path d="M10 9v1a2 2 0 0 0-2 2v7a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-7a2 2 0 0 0-2-2V9"/>
+      <path d="M7 3l2 2"/>
+      <path d="M17 3l-2 2"/>
+    </symbol>
+    <!-- Tube Applicator: doe-foot wand -->
+    <symbol id="icon-applicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 14v6"/>
+      <rect x="10" y="20" width="4" height="2" rx="1"/>
+      <path d="M12 14v-2"/>
+      <ellipse cx="12" cy="7" rx="2.5" ry="5"/>
+      <path d="M9.5 6a5 5 0 0 1 5 0"/>
+      <path d="M9.5 9a5 5 0 0 1 5 0"/>
+    </symbol>
+    <!-- Pump: push-down pump dispenser -->
+    <symbol id="icon-pump" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2v3"/>
+      <path d="M10 5h4"/>
+      <path d="M12 5v3"/>
+      <rect x="8" y="8" width="8" height="3" rx="1"/>
+      <path d="M9 11v2a1 1 0 0 0-1 1v5a4 4 0 0 0 4 4h0a4 4 0 0 0 4-4v-5a1 1 0 0 0-1-1v-2"/>
+    </symbol>
+    <!-- Twist Stick: retractable stick -->
+    <symbol id="icon-stick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 2h6v3l-1 1h-4l-1-1V2z"/>
+      <rect x="9" y="6" width="6" height="10" rx="1"/>
+      <path d="M9 16l-1 1v3a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-3l-1-1"/>
+      <path d="M9 10h6"/>
+    </symbol>
+    <!-- Spoolie: wand with bristle tip -->
+    <symbol id="icon-spoolie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 12v8"/>
+      <rect x="10" y="20" width="4" height="2" rx="1"/>
+      <ellipse cx="12" cy="6" rx="3" ry="5"/>
+      <path d="M10 4l4 4"/>
+      <path d="M10 6l4 4"/>
+      <path d="M10 8l3 3"/>
+      <path d="M14 4l-4 4"/>
+      <path d="M14 6l-4 4"/>
+    </symbol>
+    <!-- Mini Capsule: small snap-open compartment -->
+    <symbol id="icon-pod" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="6" y="4" width="12" height="16" rx="3"/>
+      <path d="M6 10h12"/>
+      <path d="M10 4v6"/>
+      <circle cx="15" cy="7" r="0.8" fill="currentColor" stroke="none"/>
+    </symbol>
+  </svg>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">KEN</a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#modules">Modules</a></li>
+        <li><a href="#build">Build Yours</a></li>
+      </ul>
+      <a href="#build" class="nav-cta">Customize Now</a>
+      <button class="cart-btn" id="cart-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Cart Slide-out -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" id="cart-close">&times;</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <p class="cart-empty">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-footer-total">
+        <span>Total</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <a href="checkout.html" class="btn btn-pink btn-full" style="text-align:center">Checkout</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-tagline">Modular. Compact. You.</p>
+      <h1 class="hero-title">Meet <span class="brand-accent">KEN.</span></h1>
+      <p class="hero-subtitle">All your daily essentials — perfume, lip gloss, sunscreen, concealer — in one sleek, pocket-sized carry that clips right onto your keychain.</p>
+      <p class="hero-motto">"Look good, feel good, do good."</p>
+      <a href="#build" class="btn btn-pink">Build Your KEN</a>
+    </div>
+    <div class="hero-visual">
+      <div class="product-explorer">
+        <div class="explorer-ring"></div>
+        <div class="explorer-ring ring-2"></div>
+        <div class="explorer-core">
+          <span>KEN</span>
+        </div>
+        <div class="orbit-module" data-label="Spritz Bottle" data-angle="0"><svg><use href="#icon-spritz"/></svg></div>
+        <div class="orbit-module" data-label="Tube Applicator" data-angle="60"><svg><use href="#icon-applicator"/></svg></div>
+        <div class="orbit-module" data-label="Pump" data-angle="120"><svg><use href="#icon-pump"/></svg></div>
+        <div class="orbit-module" data-label="Twist Stick" data-angle="180"><svg><use href="#icon-stick"/></svg></div>
+        <div class="orbit-module" data-label="Spoolie" data-angle="240"><svg><use href="#icon-spoolie"/></svg></div>
+        <div class="orbit-module" data-label="Mini Capsule" data-angle="300"><svg><use href="#icon-pod"/></svg></div>
+        <div class="module-tooltip"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Three steps to your perfect everyday carry.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Choose Your Modules</h3>
+        <p>Each module is a mechanism — spritz, pump, stick, and more. One mechanism fits tons of products.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Snap & Stack</h3>
+        <p>Each module clicks into the KEN core magnetically. Add as many as you need, up to six.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Clip & Go</h3>
+        <p>Attach KEN to your keychain, bag, or belt loop. Everything you need, always within reach.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modules Showcase -->
+  <section id="modules" class="modules-showcase">
+    <h2 class="section-title">The Modules</h2>
+    <p class="section-subtitle">Each module is a mechanism designed to fit a wide range of products.</p>
+    <div class="module-grid">
+      <div class="module-card">
+        <div class="module-icon"><svg><use href="#icon-spritz"/></svg></div>
+        <h3>Spritz Bottle</h3>
+        <p>Fine-mist spray nozzle. Perfect for perfume, cologne, setting spray, facial mist, or body spray.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon"><svg><use href="#icon-applicator"/></svg></div>
+        <h3>Tube Applicator</h3>
+        <p>Doe-foot wand applicator. Ideal for lip gloss, lip oil, concealer, liquid blush, or any liquid product.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon"><svg><use href="#icon-pump"/></svg></div>
+        <h3>Pump</h3>
+        <p>Push-down pump dispenser. Great for sunscreen, foundation, lotion, serum, or moisturizer.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon"><svg><use href="#icon-stick"/></svg></div>
+        <h3>Twist Stick</h3>
+        <p>Retractable twist-up stick. Works for concealer, deodorant, lip balm, blush stick, or solid perfume.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon"><svg><use href="#icon-spoolie"/></svg></div>
+        <h3>Spoolie</h3>
+        <p>Wand with bristle applicator. Made for mascara, brow gel, lash serum, or hair flyaway stick.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon"><svg><use href="#icon-pod"/></svg></div>
+        <h3>Mini Capsule</h3>
+        <p>Snap-open mini compartment. Carry breath mints, vitamins, bobby pins, earbuds, or any small essentials.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Build Your KEN — Drag & Drop Customizer -->
+  <section id="build" class="customizer">
+    <h2 class="section-title">Build Your KEN</h2>
+    <p class="section-subtitle">Drag modules onto the product to customize your carry. Add up to <strong>6 modules</strong> — duplicates welcome.</p>
+
+    <div class="customizer-layout">
+      <!-- Left: Module tray (draggable items) -->
+      <div class="module-tray">
+        <h3>Modules</h3>
+        <div class="drag-module" draggable="true" data-module="spritz" data-price="4.99">
+          <span class="drag-icon"><svg><use href="#icon-spritz"/></svg></span>
+          <div class="drag-info">
+            <h4>Spritz Bottle</h4>
+            <span>+$4.99</span>
+          </div>
+          <span class="drag-handle">⠿</span>
+        </div>
+        <div class="drag-module" draggable="true" data-module="applicator" data-price="3.99">
+          <span class="drag-icon"><svg><use href="#icon-applicator"/></svg></span>
+          <div class="drag-info">
+            <h4>Tube Applicator</h4>
+            <span>+$3.99</span>
+          </div>
+          <span class="drag-handle">⠿</span>
+        </div>
+        <div class="drag-module" draggable="true" data-module="pump" data-price="4.49">
+          <span class="drag-icon"><svg><use href="#icon-pump"/></svg></span>
+          <div class="drag-info">
+            <h4>Pump</h4>
+            <span>+$4.49</span>
+          </div>
+          <span class="drag-handle">⠿</span>
+        </div>
+        <div class="drag-module" draggable="true" data-module="stick" data-price="3.99">
+          <span class="drag-icon"><svg><use href="#icon-stick"/></svg></span>
+          <div class="drag-info">
+            <h4>Twist Stick</h4>
+            <span>+$3.99</span>
+          </div>
+          <span class="drag-handle">⠿</span>
+        </div>
+        <div class="drag-module" draggable="true" data-module="spoolie" data-price="3.49">
+          <span class="drag-icon"><svg><use href="#icon-spoolie"/></svg></span>
+          <div class="drag-info">
+            <h4>Spoolie</h4>
+            <span>+$3.49</span>
+          </div>
+          <span class="drag-handle">⠿</span>
+        </div>
+        <div class="drag-module" draggable="true" data-module="pod" data-price="2.99">
+          <span class="drag-icon"><svg><use href="#icon-pod"/></svg></span>
+          <div class="drag-info">
+            <h4>Mini Capsule</h4>
+            <span>+$2.99</span>
+          </div>
+          <span class="drag-handle">⠿</span>
+        </div>
+      </div>
+
+      <!-- Center: Product diagram with drop slots -->
+      <div class="product-diagram">
+        <h3>Your KEN</h3>
+        <p class="diagram-hint">Drop modules into any slot — click a filled slot to remove it</p>
+        <div class="product-body">
+          <div class="keychain-ring"></div>
+          <div class="ken-body" id="ken-body">
+            <span class="ken-body-label">KEN</span>
+            <div class="drop-slot" data-slot="0">
+              <span class="slot-label">Slot 1</span>
+            </div>
+            <div class="drop-slot" data-slot="1">
+              <span class="slot-label">Slot 2</span>
+            </div>
+            <div class="drop-slot" data-slot="2">
+              <span class="slot-label">Slot 3</span>
+            </div>
+          </div>
+          <div class="slot-controls">
+            <button class="slot-ctrl-btn" id="remove-slot-btn" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>Remove slot</span>
+            </button>
+            <span class="slot-count-label" id="slot-count-label">3 / 6 slots</span>
+            <button class="slot-ctrl-btn" id="add-slot-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>Add slot</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Order summary -->
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+
+        <label class="own-ken-toggle">
+          <input type="checkbox" id="own-ken-toggle">
+          <span class="toggle-switch"></span>
+          <span class="toggle-text">I already have a KEN</span>
+        </label>
+
+        <div class="summary">
+          <div class="summary-line core-line" id="core-line">
+            <span>KEN Core</span>
+            <span>$12.99</span>
+          </div>
+          <div class="summary-modules"></div>
+          <div class="summary-divider"></div>
+          <div class="summary-total">
+            <span>Total</span>
+            <span class="total-price">$12.99</span>
+          </div>
+        </div>
+        <button class="btn btn-pink btn-full" id="add-to-cart">Add to Cart</button>
+        <button class="reset-btn" id="reset-btn">Reset Build</button>
+        <p class="build-note">Free shipping on orders over $25</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo">KEN</span>
+        <p>Look good, feel good, do good.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+        <a href="#">Shipping</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 KEN. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Cart Toast -->
+  <div class="toast" id="cart-toast">
+    <span>Added to cart!</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

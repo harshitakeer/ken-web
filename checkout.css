@@ -1,0 +1,231 @@
+/* ===== Checkout Layout ===== */
+.checkout-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 24px 60px;
+}
+
+.checkout-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Cart Items */
+.checkout-cart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkout-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.checkout-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.checkout-item-header h4 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.checkout-item-price {
+  font-weight: 700;
+  color: var(--color-rose);
+  font-size: 1rem;
+}
+
+.checkout-item-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.checkout-module-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--color-blue-light);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #2c3e6b;
+}
+
+.checkout-module-tag svg {
+  width: 16px;
+  height: 16px;
+}
+
+.checkout-item-remove {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.checkout-item-remove:hover {
+  color: var(--color-rose);
+}
+
+/* Form */
+.checkout-form-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 28px;
+  position: sticky;
+  top: 88px;
+}
+
+.checkout-form-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  transition: border-color 0.2s;
+  background: var(--color-bg);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2c3e6b;
+}
+
+.checkout-total-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  margin: 8px 0 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.checkout-total {
+  color: var(--color-rose);
+}
+
+.checkout-secure {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+}
+
+/* Confirmation Overlay */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.confirm-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.confirm-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 48px 40px;
+  text-align: center;
+  max-width: 420px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.confirm-overlay.show .confirm-card {
+  transform: scale(1);
+}
+
+.confirm-check {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--color-blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.confirm-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.confirm-card p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-form-card {
+    position: static;
+  }
+}
