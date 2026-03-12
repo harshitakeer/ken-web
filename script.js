@@ -206,12 +206,23 @@ function renderCart() {
           <span>${item.modules.map(m => moduleData[m].name).join(', ')}</span>
         </div>
         <span class="cart-item-price">$${item.total.toFixed(2)}</span>
+        <button class="cart-item-remove" data-index="${index}" aria-label="Remove item">&times;</button>
       </div>
     `;
   });
 
   cartBody.innerHTML = html;
   cartTotal.textContent = `$${total.toFixed(2)}`;
+
+  // Attach remove listeners
+  cartBody.querySelectorAll('.cart-item-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.index);
+      cart.splice(i, 1);
+      localStorage.setItem('kenCart', JSON.stringify(cart));
+      renderCart();
+    });
+  });
 }
 
 // ────────── Dynamic Slots ──────────
@@ -292,6 +303,12 @@ function attachSlotListeners(slot) {
     slots[slotIndex] = mod;
     rebuildSlots();
     renderSummary();
+    // Animate the dropped slot
+    const droppedSlot = kenBody.querySelector(`[data-slot="${slotIndex}"]`);
+    if (droppedSlot) {
+      droppedSlot.classList.add('just-dropped');
+      droppedSlot.addEventListener('animationend', () => droppedSlot.classList.remove('just-dropped'), { once: true });
+    }
   });
 
   slot.addEventListener('click', () => {
@@ -372,6 +389,11 @@ dragModules.forEach(el => {
         slots[slotIndex] = touchDragModule;
         rebuildSlots();
         renderSummary();
+        const droppedSlot = kenBody.querySelector(`[data-slot="${slotIndex}"]`);
+        if (droppedSlot) {
+          droppedSlot.classList.add('just-dropped');
+          droppedSlot.addEventListener('animationend', () => droppedSlot.classList.remove('just-dropped'), { once: true });
+        }
       }
     });
 

@@ -25,8 +25,8 @@
   --shadow-sm: 0 1px 3px rgba(27, 42, 74, 0.08);
   --shadow-md: 0 4px 20px rgba(27, 42, 74, 0.12);
   --shadow-lg: 0 8px 32px rgba(27, 42, 74, 0.16);
-  --font-body: 'Inter', -apple-system, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
 }
 
 html {
@@ -381,18 +381,15 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--color-gradient);
-  color: white;
+  background: transparent;
+  border: 2px solid var(--color-pink);
+  color: var(--color-pink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 20px;
-}
-
-.step:nth-child(2) .step-number {
-  background: var(--color-rose);
 }
 
 .step h3 {
@@ -426,21 +423,13 @@ body {
   border-radius: var(--radius);
   padding: 32px 24px;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .module-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-  border-color: var(--color-rose);
-}
-
-.module-card:nth-child(even) {
-  border-top: 3px solid var(--color-rose-light);
-}
-
-.module-card:nth-child(odd) {
-  border-top: 3px solid var(--color-blue-light);
+  border: 2px solid var(--color-rose);
 }
 
 .module-icon {
@@ -649,6 +638,26 @@ body {
   border-color: rgba(255,255,255,0.7);
   background: rgba(255,255,255,0.2);
   cursor: pointer;
+}
+
+.drop-slot.filled.just-dropped {
+  animation: slotPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slotPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+    background: rgba(255,255,255,0.5);
+  }
+  60% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    background: rgba(255,255,255,0.2);
+  }
 }
 
 .drop-slot.filled:hover {
@@ -1042,6 +1051,23 @@ body {
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--color-text);
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cart-item-remove:hover {
+  background: var(--color-rose-light);
+  color: var(--color-rose);
 }
 
 .cart-footer {
