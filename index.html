@@ -195,66 +195,74 @@
   <!-- Build Your KEN — Drag & Drop Customizer -->
   <section id="build" class="customizer">
     <h2 class="section-title">Build Your KEN</h2>
-    <p class="section-subtitle">Drag modules onto the product to customize your carry. Add up to <strong>6 modules</strong> — duplicates welcome.</p>
+    <p class="section-subtitle">
+      <span class="hint-desktop">Drag modules onto the product to customize your carry. Add up to <strong>6 modules</strong> — duplicates welcome.</span>
+      <span class="hint-mobile">Tap any module to add it to your KEN. Add up to <strong>6 modules</strong> — duplicates welcome.</span>
+    </p>
 
     <div class="customizer-layout">
       <!-- Left: Module tray (draggable items) -->
       <div class="module-tray">
         <h3>Modules</h3>
-        <div class="drag-module" draggable="true" data-module="spritz" data-price="4.99">
-          <span class="drag-icon"><svg><use href="#icon-spritz"/></svg></span>
-          <div class="drag-info">
-            <h4>Spritz Bottle</h4>
-            <span>+$4.99</span>
+        <div class="tray-grid">
+          <div class="drag-module" draggable="true" data-module="spritz" data-price="4.99">
+            <span class="drag-icon"><svg><use href="#icon-spritz"/></svg></span>
+            <div class="drag-info">
+              <h4>Spritz Bottle</h4>
+              <span>+$4.99</span>
+            </div>
+            <span class="drag-handle">⠿</span>
           </div>
-          <span class="drag-handle">⠿</span>
-        </div>
-        <div class="drag-module" draggable="true" data-module="applicator" data-price="3.99">
-          <span class="drag-icon"><svg><use href="#icon-applicator"/></svg></span>
-          <div class="drag-info">
-            <h4>Tube Applicator</h4>
-            <span>+$3.99</span>
+          <div class="drag-module" draggable="true" data-module="applicator" data-price="3.99">
+            <span class="drag-icon"><svg><use href="#icon-applicator"/></svg></span>
+            <div class="drag-info">
+              <h4>Tube Applicator</h4>
+              <span>+$3.99</span>
+            </div>
+            <span class="drag-handle">⠿</span>
           </div>
-          <span class="drag-handle">⠿</span>
-        </div>
-        <div class="drag-module" draggable="true" data-module="pump" data-price="4.49">
-          <span class="drag-icon"><svg><use href="#icon-pump"/></svg></span>
-          <div class="drag-info">
-            <h4>Pump</h4>
-            <span>+$4.49</span>
+          <div class="drag-module" draggable="true" data-module="pump" data-price="4.49">
+            <span class="drag-icon"><svg><use href="#icon-pump"/></svg></span>
+            <div class="drag-info">
+              <h4>Pump</h4>
+              <span>+$4.49</span>
+            </div>
+            <span class="drag-handle">⠿</span>
           </div>
-          <span class="drag-handle">⠿</span>
-        </div>
-        <div class="drag-module" draggable="true" data-module="stick" data-price="3.99">
-          <span class="drag-icon"><svg><use href="#icon-stick"/></svg></span>
-          <div class="drag-info">
-            <h4>Twist Stick</h4>
-            <span>+$3.99</span>
+          <div class="drag-module" draggable="true" data-module="stick" data-price="3.99">
+            <span class="drag-icon"><svg><use href="#icon-stick"/></svg></span>
+            <div class="drag-info">
+              <h4>Twist Stick</h4>
+              <span>+$3.99</span>
+            </div>
+            <span class="drag-handle">⠿</span>
           </div>
-          <span class="drag-handle">⠿</span>
-        </div>
-        <div class="drag-module" draggable="true" data-module="spoolie" data-price="3.49">
-          <span class="drag-icon"><svg><use href="#icon-spoolie"/></svg></span>
-          <div class="drag-info">
-            <h4>Spoolie</h4>
-            <span>+$3.49</span>
+          <div class="drag-module" draggable="true" data-module="spoolie" data-price="3.49">
+            <span class="drag-icon"><svg><use href="#icon-spoolie"/></svg></span>
+            <div class="drag-info">
+              <h4>Spoolie</h4>
+              <span>+$3.49</span>
+            </div>
+            <span class="drag-handle">⠿</span>
           </div>
-          <span class="drag-handle">⠿</span>
-        </div>
-        <div class="drag-module" draggable="true" data-module="pod" data-price="2.99">
-          <span class="drag-icon"><svg><use href="#icon-pod"/></svg></span>
-          <div class="drag-info">
-            <h4>Mini Capsule</h4>
-            <span>+$2.99</span>
+          <div class="drag-module" draggable="true" data-module="pod" data-price="2.99">
+            <span class="drag-icon"><svg><use href="#icon-pod"/></svg></span>
+            <div class="drag-info">
+              <h4>Mini Capsule</h4>
+              <span>+$2.99</span>
+            </div>
+            <span class="drag-handle">⠿</span>
           </div>
-          <span class="drag-handle">⠿</span>
         </div>
       </div>
 
       <!-- Center: Product diagram with drop slots -->
       <div class="product-diagram">
         <h3>Your KEN</h3>
-        <p class="diagram-hint">Drop modules into any slot — click a filled slot to remove it</p>
+        <p class="diagram-hint">
+          <span class="hint-desktop">Drop modules into any slot — click a filled slot to remove</span>
+          <span class="hint-mobile">Tap a module below to add it — tap a filled slot to remove</span>
+        </p>
         <div class="product-body">
           <div class="keychain-ring"></div>
           <div class="ken-body" id="ken-body">

@@ -9,21 +9,26 @@
   const core = explorer.querySelector('.explorer-core');
   const explorerRect = () => explorer.getBoundingClientRect();
 
-  const RADIUS = 140;
   let angleOffset = 0;
   let spinning = false;
   let autoRotate = true;
   let lastTime = performance.now();
 
+  // Radius scales with the container so modules never overflow onto text
+  function getRadius() {
+    return Math.round(explorer.offsetWidth * 0.39);
+  }
+
   function positionModules() {
     const cx = explorer.offsetWidth / 2;
     const cy = explorer.offsetHeight / 2;
+    const r = getRadius();
 
     modules.forEach((mod, i) => {
       const baseAngle = (i * 60);
       const angle = (baseAngle + angleOffset) * (Math.PI / 180);
-      const x = cx + RADIUS * Math.cos(angle) - mod.offsetWidth / 2;
-      const y = cy + RADIUS * Math.sin(angle) - mod.offsetHeight / 2;
+      const x = cx + r * Math.cos(angle) - mod.offsetWidth / 2;
+      const y = cy + r * Math.sin(angle) - mod.offsetHeight / 2;
       mod.style.left = x + 'px';
       mod.style.top = y + 'px';
     });
@@ -324,11 +329,37 @@ function attachSlotListeners(slot) {
 addSlotBtn.addEventListener('click', addSlot);
 removeSlotBtn.addEventListener('click', removeSlot);
 
-// ────────── Drag from tray ──────────
+// ────────── Tap / click to add to next empty slot ──────────
+
+function addToNextSlot(moduleName) {
+  const nextEmpty = slots.indexOf(null);
+  if (nextEmpty === -1) {
+    toast.querySelector('span').textContent = 'All slots filled — tap a slot to remove it.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+    return;
+  }
+  slots[nextEmpty] = moduleName;
+  rebuildSlots();
+  renderSummary();
+  const target = kenBody.querySelector(`[data-slot="${nextEmpty}"]`);
+  if (target) {
+    target.classList.add('just-dropped');
+    target.addEventListener('animationend', () => target.classList.remove('just-dropped'), { once: true });
+  }
+}
+
+// ────────── Drag from tray & Touch Support ──────────
 
 const dragModules = document.querySelectorAll('.drag-module');
 
+let touchMoved = false;
+
 dragModules.forEach(el => {
+
+  // ── Desktop HTML5 drag ──
+  let justFinishedDrag = false;
+
   el.addEventListener('dragstart', e => {
     e.dataTransfer.setData('text/plain', el.dataset.module);
     e.dataTransfer.effectAllowed = 'copy';
@@ -337,70 +368,36 @@ dragModules.forEach(el => {
 
   el.addEventListener('dragend', () => {
     el.style.opacity = '';
+    justFinishedDrag = true;
+    setTimeout(() => { justFinishedDrag = false; }, 100);
   });
-});
 
-// ────────── Touch Support (Mobile) ──────────
-
-let touchDragModule = null;
-let touchGhost = null;
-
-dragModules.forEach(el => {
-  el.addEventListener('touchstart', e => {
-    touchDragModule = el.dataset.module;
-    const touch = e.touches[0];
-    touchGhost = el.cloneNode(true);
-    touchGhost.classList.add('drag-ghost');
-    touchGhost.style.width = el.offsetWidth + 'px';
-    touchGhost.style.left = (touch.clientX - 40) + 'px';
-    touchGhost.style.top = (touch.clientY - 25) + 'px';
-    document.body.appendChild(touchGhost);
-    el.style.opacity = '0.4';
+  // ── Touch: passive so page scroll is never blocked ──
+  el.addEventListener('touchstart', () => {
+    touchMoved = false;
   }, { passive: true });
 
-  el.addEventListener('touchmove', e => {
-    if (!touchGhost) return;
-    e.preventDefault();
-    const touch = e.touches[0];
-    touchGhost.style.left = (touch.clientX - 40) + 'px';
-    touchGhost.style.top = (touch.clientY - 25) + 'px';
+  el.addEventListener('touchmove', () => {
+    touchMoved = true;
+  }, { passive: true });
 
-    document.querySelectorAll('.drop-slot').forEach(slot => {
-      const rect = slot.getBoundingClientRect();
-      if (touch.clientX >= rect.left && touch.clientX <= rect.right &&
-          touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
-        slot.classList.add('drag-over');
-      } else {
-        slot.classList.remove('drag-over');
-      }
-    });
-  }, { passive: false });
+  // touchend handles tap directly — more reliable than click on iOS
+  // with draggable="true" elements
+  let touchTapHandled = false;
+  el.addEventListener('touchend', () => {
+    if (!touchMoved) {
+      touchTapHandled = true;
+      addToNextSlot(el.dataset.module);
+      setTimeout(() => { touchTapHandled = false; }, 400);
+    }
+  }, { passive: true });
 
-  el.addEventListener('touchend', e => {
-    if (!touchGhost) return;
-    const touch = e.changedTouches[0];
-
-    document.querySelectorAll('.drop-slot').forEach(slot => {
-      slot.classList.remove('drag-over');
-      const rect = slot.getBoundingClientRect();
-      if (touch.clientX >= rect.left && touch.clientX <= rect.right &&
-          touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
-        const slotIndex = parseInt(slot.dataset.slot);
-        slots[slotIndex] = touchDragModule;
-        rebuildSlots();
-        renderSummary();
-        const droppedSlot = kenBody.querySelector(`[data-slot="${slotIndex}"]`);
-        if (droppedSlot) {
-          droppedSlot.classList.add('just-dropped');
-          droppedSlot.addEventListener('animationend', () => droppedSlot.classList.remove('just-dropped'), { once: true });
-        }
-      }
-    });
-
-    el.style.opacity = '';
-    touchGhost.remove();
-    touchGhost = null;
-    touchDragModule = null;
+  // ── Desktop click → add to next slot (fallback for non-drag clicks) ──
+  el.addEventListener('click', () => {
+    if (justFinishedDrag) return;
+    if (touchTapHandled) { touchTapHandled = false; return; } // already handled by touchend
+    if (touchMoved) { touchMoved = false; return; }
+    addToNextSlot(el.dataset.module);
   });
 });
 
